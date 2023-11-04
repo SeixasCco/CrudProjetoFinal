@@ -39,4 +39,9 @@ class AppStrings {
       'Falha ao atualizar vaga de estacionamento';
   static const deleteParkingSpotFailure =
       'Falha ao excluir vaga de estacionamento';
+
+  // Error strings
+  static const GenericFailure = 'Algo deu errado.';
+  static const TryAgain = 'Tente Novamente'
+
 }

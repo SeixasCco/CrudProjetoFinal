@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/consts.dart';
 
 class ErrorView extends StatelessWidget {
   final String message;
@@ -10,7 +11,7 @@ class ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Error'),
+        title: Text(AppStrings.GenericFailure),
       ),
       body: Center(
         child: Padding(
@@ -25,7 +26,7 @@ class ErrorView extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'Oops! Something went wrong.',
+                AppStrings.GenericFailure,
                 style: TextStyle(fontSize: 24),
                 textAlign: TextAlign.center,
               ),
@@ -39,7 +40,7 @@ class ErrorView extends StatelessWidget {
               if (onRetry != null)
                 ElevatedButton(
                   onPressed: onRetry,
-                  child: Text('Try Again'),
+                  child: Text(AppStrings.TryAgain),
                 ),
             ],
           ),
