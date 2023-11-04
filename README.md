@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-# CrudProjetoFinal
-
-A new Flutter project created with FlutLab - https://flutlab.io
-
-## Getting Started
-
-A few resources to get you started if this is your first Flutter project:
-
-- https://flutter.dev/docs/get-started/codelab
-- https://flutter.dev/docs/cookbook
-
-For help getting started with Flutter, view our
-https://flutter.dev/docs, which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## Getting Started: FlutLab - Flutter Online IDE
-
-- How to use FlutLab? Please, view our https://flutlab.io/docs
-- Join the discussion and conversation on https://flutlab.io/residents
-=======
 # Parking Spot Management Application
 
 ## Overview
@@ -58,9 +37,3 @@ The application consumes the following REST API endpoints:
 
 For more details, refer to the [API documentation](https://documenter.getpostman.com/view/4601883/2s8YY9xTHv).
 
-## Installation
-Clone this repository and import into **Android Studio** or **VS Code**:
-
-```bash
-git clone https://github.com/SeixasCco/PegaMoedaFlutter.git
->>>>>>> f63410c08d24e05e5daf137796fe6b3bac1ce987
