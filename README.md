@@ -37,9 +37,3 @@ The application consumes the following REST API endpoints:
 
 For more details, refer to the [API documentation](https://documenter.getpostman.com/view/4601883/2s8YY9xTHv).
 
-## Installation
-Clone this repository and import into **Android Studio** or **VS Code**:
-
-```bash
-git clone https://github.com/SeixasCco/PegaMoedaFlutter.git
->>>>>>> f63410c08d24e05e5daf137796fe6b3bac1ce987
