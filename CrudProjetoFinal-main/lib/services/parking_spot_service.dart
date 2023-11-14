@@ -20,12 +20,14 @@ class ParkingSpotService {
       headers: {'Content-Type': 'application/json'},
       body: json.encode(spot.toJson()),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return ParkingSpot.fromJson(json.decode(response.body));
     } else {
       throw Exception(AppStrings.createParkingSpotFailure);
     }
   }
+
+
 
   Future<ParkingSpot> updateParkingSpot(String id, ParkingSpot spot) async {
     final response = await http.put(

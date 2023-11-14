@@ -142,14 +142,14 @@ class _ParkingSpotEditViewState extends State<ParkingSpotEditView> {
                   onSaved: (value) => block = value!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the block.';
+                      return 'Por favor digite o bloco.';
                     }
                     return null;
                   },
                 ),
 
                 ElevatedButton(
-                  child: Text(widget.parkingSpot == null ? 'Add Parking Spot' : 'Save Parking Spot'),
+                  child: Text(widget.parkingSpot == null ? 'Adicionar Vaga' : 'Salvar Vaga'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
@@ -173,7 +173,7 @@ class _ParkingSpotEditViewState extends State<ParkingSpotEditView> {
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Saving Parking Spot...')),
+                        SnackBar(content: Text('Salvando Vaga...')),
                       );
 
                       Navigator.of(context).pop();
