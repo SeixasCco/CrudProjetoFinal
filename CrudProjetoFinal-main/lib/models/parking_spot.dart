@@ -42,17 +42,18 @@ class ParkingSpot {
     );
   }
 
-  // Update toJson method if needed
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'licensePlate': licensePlate,
-    'parkingSpotNumber': parkingSpotNumber,
-    'brandCar': brandCar,
-    'modelCar': model,
-    'colorCar': color,
-    'registrationDate': registrationDate?.toIso8601String(),
-    'responsibleName': responsibleName,
-    'apartment': apartment,
-    'block': block,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id ?? "";
+    data['parkingSpotNumber'] = parkingSpotNumber ?? "";
+    data['licensePlateCar'] = licensePlate ?? "";
+    data['brandCar'] = brandCar ?? "";
+    data['modelCar'] = model ?? "";
+    data['colorCar'] = color ?? "";
+    data['registrationDate'] = registrationDate?.toIso8601String() ?? "";
+    data['responsibleName'] = responsibleName ?? "";
+    data['apartment'] = apartment ?? "";
+    data['block'] = block ?? "";
+    return data;
+  }
 }

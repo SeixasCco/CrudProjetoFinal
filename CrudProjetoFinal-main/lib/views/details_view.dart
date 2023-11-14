@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/parking_spot_bloc.dart';
 import '../models/parking_spot.dart';
-import '../views/add_edit_view.dart';
+import '../views/add_view.dart';
 import '../constants/consts.dart';
 
 class ParkingSpotDetailsView extends StatelessWidget {
@@ -39,7 +39,7 @@ class ParkingSpotDetailsView extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        ParkingSpotEditView(parkingSpot: parkingSpot),
+                        ParkingSpotAddView.ParkingSpitAddView(parkingSpot: parkingSpot),
                   ),
                 );
               },
@@ -69,13 +69,13 @@ class ParkingSpotDetailsView extends StatelessWidget {
               children: <Widget>[
                 Text(
                     '${AppStrings.licensePlateLabel}${parkingSpot.licensePlate}',
-                    style: const TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 30)),
                 const SizedBox(height: 10),
                 Text('${AppStrings.modelLabel}${parkingSpot.model}',
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 50)),
                 const SizedBox(height: 10),
                 Text('${AppStrings.colorLabel}${parkingSpot.color}',
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 20)),
               ],
             ),
           ),

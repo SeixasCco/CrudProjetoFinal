@@ -1,11 +1,13 @@
+import 'package:crudprojetofinal/views/edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/parking_spot_bloc.dart';
 import '../views/details_view.dart';
-import '../views/add_edit_view.dart';
+import '../views/add_view.dart';
 import '../views/error_view.dart';
 import '../constants/consts.dart';
 import '../views/delete_view.dart';
+import '../views/edit_view.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -92,13 +94,29 @@ class HomeView extends StatelessWidget {
                 MaterialPageRoute(builder: (context) {
                   return BlocProvider.value(
                     value: parkingSpotBloc,
-                    child: ParkingSpotEditView(),
+                    child: ParkingSpotAddView.ParkingSpitAddView(),
                   );
                 }),
               );
             },
             child: const Icon(Icons.add),
             heroTag: 'add',
+          ),
+          SizedBox(height: 8), // Spacing between the buttons
+          FloatingActionButton(
+            onPressed: () {
+              final ParkingSpotBloc parkingSpotBloc = BlocProvider.of<ParkingSpotBloc>(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                  return BlocProvider.value(
+                    value: parkingSpotBloc,
+                    child: ParkingSpotEditView(),
+                  );
+                }),
+              );
+            },
+            child: const Icon(Icons.edit),
+            heroTag: 'edit',
           ),
         ],
       ),
