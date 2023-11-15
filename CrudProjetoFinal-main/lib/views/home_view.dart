@@ -86,7 +86,7 @@ class HomeView extends StatelessWidget {
             child: const Icon(Icons.delete),
             heroTag: 'delete',
           ),
-          SizedBox(height: 8), // Spacing between the buttons
+          SizedBox(height: 8),
           FloatingActionButton(
             onPressed: () {
               final ParkingSpotBloc parkingSpotBloc = BlocProvider.of<ParkingSpotBloc>(context);
@@ -102,7 +102,7 @@ class HomeView extends StatelessWidget {
             child: const Icon(Icons.add),
             heroTag: 'add',
           ),
-          SizedBox(height: 8), // Spacing between the buttons
+          SizedBox(height: 8), 
           FloatingActionButton(
             onPressed: () {
               final ParkingSpotBloc parkingSpotBloc = BlocProvider.of<ParkingSpotBloc>(context);
