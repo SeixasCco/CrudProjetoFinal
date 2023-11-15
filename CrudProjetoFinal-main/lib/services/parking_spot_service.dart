@@ -37,8 +37,10 @@ class ParkingSpotService {
   }
 
   Future<ParkingSpot> updateParkingSpot(String id, ParkingSpot spot) async {
+    final String url = "https://parking-spot-238adfbb7467.herokuapp.com/parking-spot/"+id;
+    final uri = Uri.parse(url);
     final response = await http.put(
-      Uri.parse('${AppStrings.baseURL}/update/$id'),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(spot.toJson()),
     );
@@ -51,7 +53,6 @@ class ParkingSpotService {
 
   Future<void> deleteParkingSpot(String id) async {
     final String url = "https://parking-spot-238adfbb7467.herokuapp.com/parking-spot/"+id;
-
     final uri = Uri.parse(url);
     final response = await http.delete(uri);
 

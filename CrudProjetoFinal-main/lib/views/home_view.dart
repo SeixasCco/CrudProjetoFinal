@@ -94,7 +94,7 @@ class HomeView extends StatelessWidget {
                 MaterialPageRoute(builder: (context) {
                   return BlocProvider.value(
                     value: parkingSpotBloc,
-                    child: ParkingSpotAddView.ParkingSpitAddView(),
+                    child: ParkingSpotAddView(),
                   );
                 }),
               );

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import '../models/parking_spot.dart';
 import '../services/parking_spot_service.dart';
+import '../views/add_view.dart';
 
 class ParkingSpotEditView extends StatefulWidget {
+  final ParkingSpot? parkingSpot;
+
+  ParkingSpotEditView({super.key, this.parkingSpot});
+
   @override
   _ParkingSpotEditViewState createState() => _ParkingSpotEditViewState();
 }
@@ -11,6 +16,17 @@ class _ParkingSpotEditViewState extends State<ParkingSpotEditView> {
   late final ParkingSpotService _service;
   List<ParkingSpot> _parkingSpots = [];
   bool _isLoading = true;
+
+  void _navigateToEditScreen(ParkingSpot spot) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ParkingSpotAddView(
+          parkingSpot: spot,
+
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -52,7 +68,7 @@ class _ParkingSpotEditViewState extends State<ParkingSpotEditView> {
                   subtitle: Text('${spot.model} - ${spot.color}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
-                    onPressed: () => _confirmAndDeleteParkingSpot(spot.id!),
+                    onPressed: () => _navigateToEditScreen(_parkingSpots[index]),
                   ),
                 );
               },

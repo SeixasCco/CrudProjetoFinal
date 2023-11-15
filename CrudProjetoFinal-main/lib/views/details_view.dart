@@ -39,7 +39,7 @@ class ParkingSpotDetailsView extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        ParkingSpotAddView.ParkingSpitAddView(parkingSpot: parkingSpot),
+                        ParkingSpotAddView(parkingSpot: parkingSpot),
                   ),
                 );
               },

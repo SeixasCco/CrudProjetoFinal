@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/parking_spot.dart';
-import '../bloc/parking_spot_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../services/parking_spot_service.dart';
 import '../constants/consts.dart';
 
 class ParkingSpotAddView extends StatefulWidget {
   final ParkingSpot? parkingSpot;
 
-  ParkingSpotAddView.ParkingSpitAddView({super.key, this.parkingSpot});
+  ParkingSpotAddView({super.key, this.parkingSpot});
 
   @override
   _ParkingSpotAddViewState createState() => _ParkingSpotAddViewState();
@@ -23,11 +22,13 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
   late String responsibleName;
   late String apartment;
   late String block;
+  final ParkingSpotService _parkingSpotService = ParkingSpotService();
+
+  bool get isEditing => widget.parkingSpot != null;
 
   @override
   void initState() {
     super.initState();
-
     parkingSpotNumber = widget.parkingSpot?.parkingSpotNumber ?? '';
     licensePlate = widget.parkingSpot?.licensePlate ?? '';
     brandCar = widget.parkingSpot?.brandCar ?? '';
@@ -38,13 +39,53 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
     block = widget.parkingSpot?.block ?? '';
   }
 
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final parkingSpot = ParkingSpot(
+        id: isEditing ? widget.parkingSpot!.id : null,
+        parkingSpotNumber: parkingSpotNumber,
+        licensePlate: licensePlate,
+        brandCar: brandCar,
+        model: model,
+        color: color,
+        responsibleName: responsibleName,
+        apartment: apartment,
+        block: block,
+      );
+
+      print('Submitting parking spot with data: ${parkingSpot.toJson()}');
+
+      try {
+        if (isEditing) {
+          print('Attempting to update parking spot with id: ${parkingSpot.id}');
+          await _parkingSpotService.updateParkingSpot(parkingSpot.id!, parkingSpot);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Vaga atualizada com sucesso!')),
+          );
+        } else {
+          print('Attempting to create a new parking spot.');
+          await _parkingSpotService.createParkingSpot(parkingSpot);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Vaga adicionada com sucesso!')),
+          );
+        }
+        Navigator.of(context).pop();
+      } catch (e) {
+        print('Failed to save parking spot: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao salvar a vaga: $e')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.parkingSpot == null
-            ? AppStrings.addParkingSpot
-            : AppStrings.editParkingSpot),
+        title: Text(isEditing ? 'Editar Vaga' : 'Adicionar Vaga'),
       ),
       body: Form(
         key: _formKey,
@@ -53,15 +94,14 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
+              children: [
                 TextFormField(
                   initialValue: parkingSpotNumber,
-                  decoration:
-                  const InputDecoration(labelText: 'Numero da vaga'),
+                  decoration: const InputDecoration(labelText: 'Número da vaga'),
                   onSaved: (value) => parkingSpotNumber = value!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor digite o numero da vaga.';
+                      return 'Por favor digite o número da vaga.';
                     }
                     return null;
                   },
@@ -112,8 +152,7 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
                 ),
                 TextFormField(
                   initialValue: responsibleName,
-                  decoration:
-                  const InputDecoration(labelText: 'Nome do Responsável'),
+                  decoration: const InputDecoration(labelText: 'Nome do Responsável'),
                   onSaved: (value) => responsibleName = value!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -128,14 +167,14 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
                   onSaved: (value) => apartment = value!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor digite o numero do apartamento.';
+                      return 'Por favor digite o número do apartamento.';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   initialValue: block,
-                  decoration: const InputDecoration(labelText: 'Block'),
+                  decoration: const InputDecoration(labelText: 'Bloco'),
                   onSaved: (value) => block = value!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -145,39 +184,8 @@ class _ParkingSpotAddViewState extends State<ParkingSpotAddView> {
                   },
                 ),
                 ElevatedButton(
-                  child: Text(widget.parkingSpot == null
-                      ? 'Adicionar Vaga'
-                      : 'Salvar Vaga'),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-
-                      final newParkingSpot = ParkingSpot(
-                        parkingSpotNumber: parkingSpotNumber,
-                        licensePlate: licensePlate,
-                        brandCar: brandCar,
-                        model: model,
-                        color: color,
-                        responsibleName: responsibleName,
-                        apartment: apartment,
-                        block: block,
-                      );
-
-                      if (widget.parkingSpot == null) {
-                        BlocProvider.of<ParkingSpotBloc>(context)
-                            .add(AddParkingSpot(newParkingSpot));
-                      } else {
-                        BlocProvider.of<ParkingSpotBloc>(context)
-                            .add(UpdateParkingSpot(newParkingSpot));
-                      }
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Salvando Vaga...')),
-                      );
-
-                      Navigator.of(context).pop();
-                    }
-                  },
+                  child: Text(isEditing ? 'Salvar Vaga' : 'Adicionar Vaga'),
+                  onPressed: _submitForm,
                 ),
               ],
             ),
